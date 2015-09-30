@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/principal"
+    android:background="@drawable/gradient"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:dither="true">
+    <!--<com.digi.gallery.opengl.cube.CubeGLSurfaceView
+    android:id="@+id/cube"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"/>
+    -->
+    <LinearLayout
+    android:id="@+id/layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical"
+    android:orientation="horizontal"/>
+    <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom">
+	<ImageView 
+	android:id="@+id/logo_digi"
+	android:layout_width="80dip"
+	android:layout_height="80dip"
+	android:layout_gravity="left"
+	android:padding="7dip"
+	android:src="@drawable/logodigi_trans"/>
+	<ImageView 
+	android:id="@+id/logo_android"
+	android:layout_width="80dip"
+	android:layout_height="80dip"
+	android:padding="7dip"
+	android:layout_gravity="left"
+	android:src="@drawable/android_trans"/>
+	<TextView android:layout_width="fill_parent"
+	android:id="@+id/overlay_text"
+	android:layout_height="wrap_content"
+	android:text="@string/overlay_text_opengl"
+	android:textStyle="italic"
+	android:textSize="18dip"
+	android:gravity="right"
+	android:layout_gravity="bottom"
+	android:padding="7dip"
+	android:textColor="@color/White" />	   
+    </LinearLayout>
+</FrameLayout>
