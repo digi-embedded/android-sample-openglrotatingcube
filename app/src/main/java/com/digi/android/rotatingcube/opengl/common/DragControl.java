@@ -1,6 +1,6 @@
-package com.example.android.rotatingcube.opengl.common;
+package com.digi.android.rotatingcube.opengl.common;
 
-import com.example.android.rotatingcube.R;
+import com.digi.android.rotatingcube.R;
 
 import android.app.Activity;
 import android.content.Context;
@@ -350,7 +350,7 @@ public final class DragControl implements OnTouchListener {
 	}
 	
 	/**
-	 * Retrieves the special region of the screen where touch event occured.
+	 * Retrieves the special region of the screen where touch event occurred.
 	 * 
 	 * @param x Touch X.
 	 * @param y Touch Y.

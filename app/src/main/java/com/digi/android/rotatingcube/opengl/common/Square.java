@@ -1,4 +1,4 @@
-package com.example.android.rotatingcube.opengl.common;
+package com.digi.android.rotatingcube.opengl.common;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

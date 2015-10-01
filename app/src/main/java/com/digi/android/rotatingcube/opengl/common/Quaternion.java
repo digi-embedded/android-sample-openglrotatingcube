@@ -1,4 +1,4 @@
-package com.example.android.rotatingcube.opengl.common;
+package com.digi.android.rotatingcube.opengl.common;
 
 public final class Quaternion {
 	private double x;

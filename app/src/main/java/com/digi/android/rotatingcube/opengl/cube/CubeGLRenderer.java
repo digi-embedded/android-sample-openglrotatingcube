@@ -1,9 +1,9 @@
-package com.example.android.rotatingcube.opengl.cube;
+package com.digi.android.rotatingcube.opengl.cube;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import com.example.android.rotatingcube.opengl.common.DragControl;
+import com.digi.android.rotatingcube.opengl.common.DragControl;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;

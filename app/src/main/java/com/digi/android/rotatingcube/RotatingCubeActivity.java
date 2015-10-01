@@ -1,7 +1,7 @@
-package com.example.android.rotatingcube;
+package com.digi.android.rotatingcube;
 
-import com.example.android.rotatingcube.opengl.common.DragControl;
-import com.example.android.rotatingcube.opengl.cube.CubeGLSurfaceView;
+import com.digi.android.rotatingcube.opengl.common.DragControl;
+import com.digi.android.rotatingcube.opengl.cube.CubeGLSurfaceView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,16 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * This application demonstrates the usage of the OpenGL implementation in Android to render a
- * basic cube with textures.
+ * This application demonstrates the usage of the OpenGL implementation in
+ * Android to render a basic cube with textures.
  *
- * These are the application features:
- *  - OpenGL shape rendering with textures.
- *  - Rendering over a transparent background.
- *  - Multi axis rotation using touch screen.
- *  - Zoom emulation using touch screen.
- *  - Friction simulation using settings menu.
- *
+ * <p>These are the application features:</p>
+ * <ul>
+ * <li>OpenGL shape rendering with textures.</li>
+ * <li>Rendering over a transparent background.</li>
+ * <li>Multi axis rotation using touch screen.</li>
+ * <li>Zoom emulation using touch screen.</li>
+ * <li>Friction simulation using settings menu.</li>
+ * </ul>
  */
 public class RotatingCubeActivity extends Activity {
 		// Menu entries
@@ -68,13 +69,13 @@ public class RotatingCubeActivity extends Activity {
 			glView.getHolder().setFormat(PixelFormat.TRANSLUCENT | LayoutParams.FLAG_BLUR_BEHIND);
 			glView.setZOrderOnTop(true);
 
-			ImageView logo_digi = (ImageView)this.findViewById(R.id.logo_digi);
-			ImageView logo_android = (ImageView)this.findViewById(R.id.logo_android);
-			TextView overlay_text = (TextView)this.findViewById(R.id.overlay_text);
+			ImageView logoDigi = (ImageView)this.findViewById(R.id.logo_digi);
+			ImageView logoAndroid = (ImageView)this.findViewById(R.id.logo_android);
+			TextView overlayText = (TextView)this.findViewById(R.id.overlay_text);
 			
-			logo_digi.bringToFront();
-			logo_android.bringToFront();
-			overlay_text.bringToFront();
+			logoDigi.bringToFront();
+			logoAndroid.bringToFront();
+			overlayText.bringToFront();
 		}
 
 		/*

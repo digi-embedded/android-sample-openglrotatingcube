@@ -1,4 +1,4 @@
-package com.example.android.rotatingcube.opengl.common;
+package com.digi.android.rotatingcube.opengl.common;
 
 public final class Vector3 {
 	private double x,y,z;

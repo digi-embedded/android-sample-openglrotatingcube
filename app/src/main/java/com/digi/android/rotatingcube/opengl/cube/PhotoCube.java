@@ -1,4 +1,4 @@
-package com.example.android.rotatingcube.opengl.cube;
+package com.digi.android.rotatingcube.opengl.cube;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -7,7 +7,7 @@ import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import com.example.android.rotatingcube.R;
+import com.digi.android.rotatingcube.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;
