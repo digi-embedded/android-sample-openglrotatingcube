@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2014-2015 Digi International Inc.,
+ * All rights not expressly granted are reserved.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * Digi International Inc. 11001 Bren Road East, Minnetonka, MN 55343
+ * =======================================================================
+ */
 package com.digi.android.rotatingcube.opengl.common;
 
 import com.digi.android.rotatingcube.R;
@@ -6,7 +17,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.PointF;
 import android.util.FloatMath;
-import android.view.Display;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,13 +30,13 @@ public final class DragControl implements OnTouchListener {
 	private static final int DRAG_START = 0;
 	private static final int DRAG_END = 1;
 	
-	// Touch regions
+	// Touch regions.
 	private static final int ZOOM_IN = 0;
 	private static final int ZOOM_OUT = 1;
 	private static final int SPIN_IN = 2;
 	private static final int SPIN_OUT = 3;
 	
-	// Touch modes
+	// Touch modes.
 	private static final int NONE = 0;
 	private static final int DRAG = 1;
 	private static final int ZOOM = 2;
@@ -34,148 +44,108 @@ public final class DragControl implements OnTouchListener {
 
 	private static final double FLING_REDUCTION = 3000;
 	private static final double DRAG_SLOWING = 90;
-	
-	private double flingDamping = 1; // Between 0 and 1 -> 0 to stop, 1 to spin always
+	// Between 0 and 1 -> 0 to stop, 1 to spin always.
+	private double flingDamping = 1;
 
-	private float[] dragX = new float[2];
-	private float[] dragY = new float[2];
+	private final float[] dragX = new float[2];
+	private final float[] dragY = new float[2];
 	
-	private PointF longZoom = new PointF();
+	private final PointF longZoom = new PointF();
 	
-	/** Old distance for the pinch-zoom */
+	// Old distance for the pinch-zoom.
 	private float oldDist = 1f;
-	
-	/** The current object scale */
+	// The current object scale.
 	private float scale;
-	
-	/** The maximum object scale */
-	private float maxScale;
-	
-	/** The minimum object scale */
-	private float minScale;
-	
-	/** The standard object scale*/
-	private float standardScale;
-	
-	/** Size of the screen width */
-	private int screenWidth;
-	
-	/** Size of the screen height */
-	private int screenHeight;
-	
-	/** Size of the touch square side used to detect touch event on specific regions of the screen */
-	private int touchSquareSide;
-	
-	/** The application context */
-	private Context context;
-	
-	/** Current touch mode */
+	// The maximum object scale.
+	private final float maxScale;
+	// The minimum object scale.
+	private final float minScale;
+	// The standard object scale.
+	private final float standardScale;
+	// Current touch mode.
 	private int mode = NONE;
-
-	/** Base rotation, before drag */
-	private Quaternion rotation = new Quaternion(new Vector3(0,1,0), 0);
-
-	/** The amount of rotation to add as part of drag */
-	private Quaternion dragRotation = new Quaternion(new Vector3(0,1,0), 0);
-
-	/** Equal to rotation*dragRotation. */
-	private Quaternion intermediateRotation = new Quaternion(new Vector3(0,1,0), 0);
-
-	/** The current axis about which the object is being rotated */
-	private Vector3 spinAxis = new Vector3(0,0,0);
+	// Base rotation, before drag.
+	private final Quaternion rotation = new Quaternion(new Vector3(0,1));
+	// The amount of rotation to add as part of drag.
+	private final Quaternion dragRotation = new Quaternion(new Vector3(0,1));
+	// Equal to rotation*dragRotation.
+	private final Quaternion intermediateRotation = new Quaternion(new Vector3(0,1));
+	// The current axis about which the object is being rotated
+	private Vector3 spinAxis = new Vector3(0,0);
 
 	/** Flinging
 	* When you flick the screen with your finger it will keep spinning.
-	* How fast it is spinning on its own */
+	* How fast it is spinning on its own. */
 	private double flingSpeed = 0;
 	
-	/** The axis about which we are being flung, if any */
-	private Vector3 flingAxis = new Vector3(0, 0, 0);
+	// The axis about which we are being flung, if any.
+	private final Vector3 flingAxis = new Vector3(0, 0);
 	
 	/** Fling rotation we most recent added to rotation.
 	* Only here to save creating new objects too often. */
-	private Quaternion flingRotation = new Quaternion(new Vector3(0, 1, 0), 0);
+	private final Quaternion flingRotation = new Quaternion(new Vector3(0, 1));
 	
-	/** The gesture detector used to detect special touch events */
-	private GestureDetector gestureDetector;	
+	// The gesture detector used to detect special touch events.
+	private final GestureDetector gestureDetector;
 	
 	
 	public DragControl(final Context context) {
 		this(context, -5f, -10f, -3f);
 	}
 	
-	public DragControl(final Context context, float standardScale, float minScale, float maxScale) {
-		this.context = context;
-		Display display = ((Activity)this.context).getWindowManager().getDefaultDisplay();
-		this.screenWidth = display.getWidth();
-		this.screenHeight = display.getHeight();
-		this.touchSquareSide = screenHeight / 5;
+	private DragControl(final Context context, float standardScale, float minScale, float maxScale) {
 		this.maxScale = maxScale;
 		this.minScale = minScale;
 		this.standardScale = standardScale;
 		this.scale = this.standardScale;
 		this.gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
-			/*
-			 * (non-Javadoc)
-			 * @see android.view.GestureDetector.SimpleOnGestureListener#onFling(android.view.MotionEvent, android.view.MotionEvent, float, float)
-			 */
+
+			@Override
 			public boolean onFling(MotionEvent e1, MotionEvent e2,
 					float velocityX, float velocityY) {
-				flingAxis.set(-velocityY, -velocityX, 0);
+				flingAxis.set(-velocityY, -velocityX);
 				flingSpeed = flingAxis.magnitude()/FLING_REDUCTION;
 				flingAxis.normalise();
 				return true;
 			}
 			
-			/*
-			 * (non-Javadoc)
-			 * @see android.view.GestureDetector.SimpleOnGestureListener#onDoubleTap(android.view.MotionEvent)
-			 */
+			@Override
 			public boolean onDoubleTap(MotionEvent e) {
 				resetScale();
 				return true;
 			}
 			
-			/*
-			 * (non-Javadoc)
-			 * @see android.view.GestureDetector.SimpleOnGestureListener#onSingleTapConfirmed(android.view.MotionEvent)
-			 */
+			@Override
 			public boolean onSingleTapConfirmed(MotionEvent e) {
 				// Do nothing here.
 				return true;
 			}
 			
-			/*
-			 * (non-Javadoc)
-			 * @see android.view.GestureDetector.SimpleOnGestureListener#onLongPress(android.view.MotionEvent)
-			 */
+			@Override
 			public void onLongPress(MotionEvent e) {
 				super.onLongPress(e);
 				mode = ZOOM_LONG;
 				LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-	            View toastRoot = inflater.inflate(R.layout.zoom_toast, null);
-	            Toast toast = new Toast(context);
-	            toast.setView(toastRoot);
-	            toast.setGravity(Gravity.LEFT | Gravity.TOP,
-	            		(int)(e.getX() - toastRoot.getWidth() - 130), (int)(e.getY() - toastRoot.getHeight() - 80));
-	            toast.setDuration(Toast.LENGTH_SHORT);
-	            toast.show();
-	            longZoom.set(e.getX(), e.getY());
+				View toastRoot = inflater.inflate(R.layout.zoom_toast, null);
+				Toast toast = new Toast(context);
+				toast.setView(toastRoot);
+				toast.setGravity(Gravity.START | Gravity.TOP,
+						(int)(e.getX() - toastRoot.getWidth() - 130), (int)(e.getY() - toastRoot.getHeight() - 80));
+				toast.setDuration(Toast.LENGTH_SHORT);
+				toast.show();
+				longZoom.set(e.getX(), e.getY());
 			}
 		});
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.view.View.OnTouchListener#onTouch(android.view.View, android.view.MotionEvent)
-	 */
+	@Override
 	public boolean onTouch(View view, MotionEvent event) {
 		gestureDetector.onTouchEvent(event);
 		int action = event.getAction();
-		// Important use mask to distinguish pointer events (multi-touch)
+		// Important use mask to distinguish pointer events (multi-touch).
 		switch (action & MotionEvent.ACTION_MASK) {
 		case MotionEvent.ACTION_DOWN:
-			switch (getTouchArea((int)event.getX(), (int)event.getY())){
+			switch (getTouchArea()){
 			case ZOOM_IN:
 				if (scale < maxScale)
 					scale += 0.5f;
@@ -239,7 +209,7 @@ public final class DragControl implements OnTouchListener {
 			float rotateX = dragX[DRAG_END] - dragX[DRAG_START];
 			float rotateY = dragY[DRAG_END] - dragY[DRAG_START];
 			if (rotateX != 0 || rotateY != 0) {
-				spinAxis = new Vector3(-rotateY, -rotateX, 0);
+				spinAxis = new Vector3(-rotateY, -rotateX);
 				double mag = spinAxis.magnitude();
 				spinAxis.normalise();
 				intermediateRotation.set(spinAxis, mag/DRAG_SLOWING);
@@ -258,14 +228,14 @@ public final class DragControl implements OnTouchListener {
 
 	/**
 	 * FIXME do the actual updating in a separate method that
-	 * is time-dependent.
+	 * Is time-dependent.
 	 */
 	public Quaternion currentRotation() {
 		float rotateX = dragX[DRAG_END] - dragX[DRAG_START];
 		float rotateY = dragY[DRAG_END] - dragY[DRAG_START];
 
 		if (mode == DRAG && (rotateX != 0 || rotateY != 0)) {
-			spinAxis.set(-rotateY, -rotateX, 0);
+			spinAxis.set(-rotateY, -rotateX);
 			double mag = spinAxis.magnitude();
 			spinAxis.normalise();
 
@@ -298,7 +268,7 @@ public final class DragControl implements OnTouchListener {
 	 * 
 	 * @return Current fling damping value.
 	 */
-	public double getFD(){
+	private double getFD(){
 		return this.flingDamping;
 	}
 	
@@ -351,27 +321,11 @@ public final class DragControl implements OnTouchListener {
 	
 	/**
 	 * Retrieves the special region of the screen where touch event occurred.
-	 * 
-	 * @param x Touch X.
-	 * @param y Touch Y.
+	 *
 	 * @return Screen region.
 	 */
-	private int getTouchArea(int x, int y){
-		int mode;
-		if (x <= touchSquareSide) {
-			if (y <= touchSquareSide)
-				mode = ZOOM_IN;
-			else if (y <= 2*touchSquareSide)
-				mode = ZOOM_OUT;
-		} else if (x > screenWidth - touchSquareSide) {
-			if (y <= touchSquareSide)
-				mode = SPIN_IN;
-			else if (y <= 2*touchSquareSide)
-				mode = SPIN_OUT;
-		}
-		// Reset mode, we don't want to check special regions
-		mode = -1;
-		return mode;
+	private int getTouchArea(){
+		return -1;
 	}
 	
 	/**

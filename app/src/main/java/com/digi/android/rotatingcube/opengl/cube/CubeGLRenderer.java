@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2014-2015 Digi International Inc.,
+ * All rights not expressly granted are reserved.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * Digi International Inc. 11001 Bren Road East, Minnetonka, MN 55343
+ * =======================================================================
+ */
 package com.digi.android.rotatingcube.opengl.cube;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -10,15 +21,15 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 
 /**
- *  OpenGL Custom renderer used with GLSurfaceView 
+ *  OpenGL Custom renderer used with GLSurfaceView .
  */
-public class CubeGLRenderer implements GLSurfaceView.Renderer{
+class CubeGLRenderer implements GLSurfaceView.Renderer{
 
-	/** Touch screen event handler */
+	// Touch screen event handler.
 	private DragControl dragControl;
 
-	/** OpenGL object in form of a rendered cube */
-	private PhotoCube photocube;
+	// OpenGL object in form of a rendered cube.
+	private final PhotoCube photocube;
 
 	/**
 	 * Class constructor.
@@ -38,81 +49,70 @@ public class CubeGLRenderer implements GLSurfaceView.Renderer{
 		this.dragControl = dragControl;
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see android.opengl.GLSurfaceView.Renderer#onSurfaceCreated(javax.microedition.khronos.opengles.GL10, javax.microedition.khronos.egl.EGLConfig)
-	 */
+	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		// Set color's clear-value to black
+		// Set color's clear-value to black.
 		gl.glClearColor(0f, 0f, 0f, 0f);
-		// Set depth's clear-value to farthest
+		// Set depth's clear-value to farthest.
 		gl.glClearDepthf(1.0f);
-		// Enables depth-buffer for hidden surface removal
+		// Enables depth-buffer for hidden surface removal.
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		gl.glEnable(GL10.GL_BLEND);
-		// The type of depth testing to do
+		// The type of depth testing to do.
 		gl.glDepthFunc(GL10.GL_LEQUAL);
 		// Nice perspective view
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
-		// Enable smooth shading of color
+		// Enable smooth shading of color.
 		gl.glShadeModel(GL10.GL_SMOOTH);
-		// Disable dithering for better performance
-		//gl.glDisable(GL10.GL_DITHER);
-		// Selects blending method
+		// Selects blending method.
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-		// Allows alpha channels or transperancy
+		// Allows alpha channels or transperancy.
 		gl.glEnable(GL10.GL_ALPHA_TEST);
-		// Sets aplha function
+		// Sets aplha function.
 		gl.glAlphaFunc(GL10.GL_GREATER, 0.1f);
-		// Enable texture
+		// Enable texture.
 		gl.glEnable(GL10.GL_TEXTURE_2D);
-		// Load cube textures
+		// Load cube textures.
 		photocube.loadTexture(gl); 
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see android.opengl.GLSurfaceView.Renderer#onSurfaceChanged(javax.microedition.khronos.opengles.GL10, int, int)
-	 */
+	
+	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
-        /*
-         * Set our projection matrix. This doesn't have to be done
-         * each time we draw, but usually a new projection needs to
-         * be set when the viewport is resized.
-         */
+		/*
+		 * Set our projection matrix. This doesn't have to be done
+		 * each time we draw, but usually a new projection needs to
+		 * be set when the viewport is resized.
+		 */
 		gl.glViewport(0, 0, width, height);
-		// if (height == 0) height = 1;   // To prevent divide by zero
+		// To prevent divide by zero
 		float aspect = (float)width / height;
-		// Set the viewport (display area) to cover the entire window
+		// Set the viewport (display area) to cover the entire window.
 		gl.glViewport(0, 0, width, height);
 		// Setup perspective projection, with aspect ratio matches viewport
-		// Select projection matrix
+		// Select projection matrix.
 		gl.glMatrixMode(GL10.GL_PROJECTION);
-		// Reset projection matrix
+		// Reset projection matrix.
 		gl.glLoadIdentity();
-		// Use perspective projection
+		// Use perspective projection.
 		GLU.gluPerspective(gl, 45, aspect, 0.1f, 100.f);
-		// Select model-view matrix
+		// Select model-view matrix.
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
-		// Reset
+		// Reset.
 		gl.glLoadIdentity();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see android.opengl.GLSurfaceView.Renderer#onDrawFrame(javax.microedition.khronos.opengles.GL10)
-	 */
+	@Override
 	public void onDrawFrame(GL10 gl) {
-		// Clear color and depth buffers using clear-value set earlier
+		// Clear color and depth buffers using clear-value set earlier.
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-		// Reset the model-view matrix		
+		// Reset the model-view matrix.
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
 		gl.glLoadIdentity(); 
-		// Translate into the screen depending on scale
-		gl.glTranslatef(0.0f, 0.0f, dragControl.getCurrentScale());   
-		// Rotate depending on touch rotation
+		// Translate into the screen depending on scale.
+		gl.glTranslatef(0.0f, 0.0f, dragControl.getCurrentScale());
+		// Rotate depending on touch rotation.
 		gl.glMultMatrixf(dragControl.currentRotation().toMatrix(), 0);
-		// Draw the cube
+		// Draw the cube.
 		photocube.draw(gl); 
 	}
 }

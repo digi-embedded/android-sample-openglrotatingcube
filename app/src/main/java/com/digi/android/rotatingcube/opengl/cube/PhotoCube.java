@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2014-2015 Digi International Inc.,
+ * All rights not expressly granted are reserved.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * Digi International Inc. 11001 Bren Road East, Minnetonka, MN 55343
+ * =======================================================================
+ */
 package com.digi.android.rotatingcube.opengl.cube;
 
 import java.nio.ByteBuffer;
@@ -16,17 +27,13 @@ import android.graphics.BitmapFactory;
 /*
  * A photo cube with 6 pictures (textures) on its 6 faces.
  */
-public class PhotoCube {
-	private FloatBuffer vertexBuffer;  // Vertex Buffer
+class PhotoCube { 
+	// Vertex Buffer.
+	private final FloatBuffer vertexBuffer; 
 
-	private int numFaces = 6;
-	private int[] imageFileIDs = {  // Image file IDs
-//			R.drawable.red,
-//			R.drawable.red,
-//			R.drawable.blue,
-//			R.drawable.blue,
-//			R.drawable.green,
-//			R.drawable.green
+	private final int numFaces = 6;
+	// Image file IDs.
+	private final int[] imageFileIDs = {  
 			R.drawable.logodigi,
 			R.drawable.logodigi,
 			R.drawable.android,
@@ -35,68 +42,70 @@ public class PhotoCube {
 			R.drawable.freescale_logo
 	};
 
-	private float[] vertices = {  // Vertices of the 6 faces
-			// FRONT
-			-1.0f, -1.0f,  1.0f,  // 0. left-bottom-front
-			1.0f, -1.0f,  1.0f,  // 1. right-bottom-front
-			-1.0f,  1.0f,  1.0f,  // 2. left-top-front
-			1.0f,  1.0f,  1.0f,  // 3. right-top-front
-			// BACK
-			1.0f, -1.0f, -1.0f,  // 6. right-bottom-back
-			-1.0f, -1.0f, -1.0f,  // 4. left-bottom-back
-			1.0f,  1.0f, -1.0f,  // 7. right-top-back
-			-1.0f,  1.0f, -1.0f,  // 5. left-top-back
-			// LEFT
-			-1.0f, -1.0f, -1.0f,  // 4. left-bottom-back
-			-1.0f, -1.0f,  1.0f,  // 0. left-bottom-front 
-			-1.0f,  1.0f, -1.0f,  // 5. left-top-back
-			-1.0f,  1.0f,  1.0f,  // 2. left-top-front
-			// RIGHT
-			1.0f, -1.0f,  1.0f,  // 1. right-bottom-front
-			1.0f, -1.0f, -1.0f,  // 6. right-bottom-back
-			1.0f,  1.0f,  1.0f,  // 3. right-top-front
-			1.0f,  1.0f, -1.0f,  // 7. right-top-back
-			// TOP
-			-1.0f,  1.0f,  1.0f,  // 2. left-top-front
-			1.0f,  1.0f,  1.0f,  // 3. right-top-front
-			-1.0f,  1.0f, -1.0f,  // 5. left-top-back
-			1.0f,  1.0f, -1.0f,  // 7. right-top-back
-			// BOTTOM
-			-1.0f, -1.0f, -1.0f,  // 4. left-bottom-back
-			1.0f, -1.0f, -1.0f,  // 6. right-bottom-back
-			-1.0f, -1.0f,  1.0f,  // 0. left-bottom-front
-			1.0f, -1.0f,  1.0f   // 1. right-bottom-front
-	};
-
-	float textureCoordinates[] = {0.0f, 1.0f,
-			1.0f, 1.0f,
-			0.0f, 0.0f,
-			1.0f, 0.0f };
-
 	private FloatBuffer mTextureBuffer;
 
 	private boolean mShouldLoadTexture = false;
 
-	private int[] textureIDs = new int[numFaces];
-	private Bitmap[] bitmap = new Bitmap[numFaces];
-	private Context context;
+	private final int[] textureIDs = new int[numFaces];
+	private final Bitmap[] bitmap = new Bitmap[numFaces];
+	private final Context context;
 
-	// Constructor - Set up the vertex buffer
+	// Constructor - Set up the vertex buffer.
 	public PhotoCube(Context context) {
 
 		this.context = context;
 
-		// Setup vertex-array buffer. Vertices in float. An float has 4 bytes
+		// Setup vertex-array buffer. Vertices in float. An float has 4 bytes.
+		float[] vertices = {  // Vertices of the 6 faces.
+				// Front.
+				-1.0f, -1.0f, 1.0f,  // 0. left-bottom-front.
+				1.0f, -1.0f, 1.0f,  // 1. right-bottom-front.
+				-1.0f, 1.0f, 1.0f,  // 2. left-top-front.
+				1.0f, 1.0f, 1.0f,  // 3. right-top-front.
+				// Back.
+				1.0f, -1.0f, -1.0f,  // 6. right-bottom-back.
+				-1.0f, -1.0f, -1.0f,  // 4. left-bottom-back.
+				1.0f, 1.0f, -1.0f,  // 7. right-top-back.
+				-1.0f, 1.0f, -1.0f,  // 5. left-top-back.
+				// Left.
+				-1.0f, -1.0f, -1.0f,  // 4. left-bottom-back
+				-1.0f, -1.0f, 1.0f,  // 0. left-bottom-front
+				-1.0f, 1.0f, -1.0f,  // 5. left-top-back
+				-1.0f, 1.0f, 1.0f,  // 2. left-top-front
+				// Right.
+				1.0f, -1.0f, 1.0f,  // 1. right-bottom-front
+				1.0f, -1.0f, -1.0f,  // 6. right-bottom-back
+				1.0f, 1.0f, 1.0f,  // 3. right-top-front
+				1.0f, 1.0f, -1.0f,  // 7. right-top-back
+				// Top.
+				-1.0f, 1.0f, 1.0f,  // 2. left-top-front
+				1.0f, 1.0f, 1.0f,  // 3. right-top-front
+				-1.0f, 1.0f, -1.0f,  // 5. left-top-back
+				1.0f, 1.0f, -1.0f,  // 7. right-top-back
+				// Bottom.
+				-1.0f, -1.0f, -1.0f,  // 4. left-bottom-back
+				1.0f, -1.0f, -1.0f,  // 6. right-bottom-back
+				-1.0f, -1.0f, 1.0f,  // 0. left-bottom-front
+				1.0f, -1.0f, 1.0f   // 1. right-bottom-front
+		};
 		ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);
-		vbb.order(ByteOrder.nativeOrder()); // Use native byte order
-		vertexBuffer = vbb.asFloatBuffer(); // Convert from byte to float
-		vertexBuffer.put(vertices);         // Copy data into buffer
-		vertexBuffer.position(0);           // Rewind
+		// Use native byte order.
+		vbb.order(ByteOrder.nativeOrder());
+		// Convert from byte to float.
+		vertexBuffer = vbb.asFloatBuffer();
+		// Copy data into buffer.
+		vertexBuffer.put(vertices);
+		// Rewind.
+		vertexBuffer.position(0);
 
+		float[] textureCoordinates = {0.0f, 1.0f,
+				1.0f, 1.0f,
+				0.0f, 0.0f,
+				1.0f, 0.0f};
 		setTextureCoordinates(textureCoordinates);
 	}
 
-	// Render the shape
+	// Render the shape.
 	public void draw(GL10 gl) {
 		if (mShouldLoadTexture) {
 			loadTexture(gl);
@@ -112,7 +121,7 @@ public class PhotoCube {
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
 		gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, mTextureBuffer);
 
-		// front
+		// Front.
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIDs[0]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D,
 				GL10.GL_TEXTURE_MAG_FILTER,
@@ -120,57 +129,41 @@ public class PhotoCube {
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, 4);
 
 
-		// left
+		// Left.
 
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIDs[1]);
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D,
-				GL10.GL_TEXTURE_MAG_FILTER,
-				GL10.GL_NICEST);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NICEST);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 4, 4);
-
-
-		// back
+		
+		// Back.
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIDs[2]);
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D,
-				GL10.GL_TEXTURE_MAG_FILTER,
-				GL10.GL_NICEST);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NICEST);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 8, 4);
-
-
-		// right
+		
+		// Right.
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIDs[3]);
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D,
-				GL10.GL_TEXTURE_MAG_FILTER,
-				GL10.GL_NICEST);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NICEST);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 12, 4);
 
-		// top
-
+		// Top.
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIDs[4]);
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D,
-				GL10.GL_TEXTURE_MAG_FILTER,
-				GL10.GL_NICEST);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NICEST);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 16, 4);
 
-		// bottom
-
+		// Bottom.
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIDs[5]);
-		gl.glTexParameterf(GL10.GL_TEXTURE_2D,
-				GL10.GL_TEXTURE_MAG_FILTER,
-				GL10.GL_NICEST);
+		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NICEST);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 20, 4);
-
+		
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
 	}
 
 	/**
 	 * Set the texture coordinates.
-	 *
-	 * @param textureCoords
 	 */
-	protected void setTextureCoordinates(float[] textureCoords) {
-		// float is 4 bytes, therefore we multiply the number if vertices with 4 * 6 faces.
+	private void setTextureCoordinates(float[] textureCoords) {
+		// Float is 4 bytes, therefore we multiply the number if vertices with 4 * 6 faces.
 		ByteBuffer byteBuf = ByteBuffer.allocateDirect(textureCoords.length * 4 * 6);
 		byteBuf.order(ByteOrder.nativeOrder());
 		mTextureBuffer = byteBuf.asFloatBuffer();
@@ -178,11 +171,11 @@ public class PhotoCube {
 			mTextureBuffer.put(textureCoords);
 		mTextureBuffer.position(0);
 	}
-
-
-	// Load images into 6 GL textures
+	
+	// Load images into 6 GL textures.
 	public void loadTexture(GL10 gl) {
-		gl.glGenTextures(6, textureIDs, 0); // Generate texture-ID array for 6 IDs
+	// Generate texture-ID array for 6 IDs.
+		gl.glGenTextures(6, textureIDs, 0);
 
 		for (int face = 0; face < numFaces; face++) {
 			// Load up, and flip the texture:
@@ -191,13 +184,13 @@ public class PhotoCube {
 
 			gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIDs[face]);
 
-			// Create Nearest Filtered Texture
+			// Create Nearest Filtered Texture.
 			gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER,
 					GL10.GL_NEAREST);
 			gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER,
 					GL10.GL_NEAREST);
 
-			// Build Texture from loaded bitmap for the currently-bind texture ID
+			// Build Texture from loaded bitmap for the currently-bind texture ID.
 			final int TILE_WIDTH = 512; 
 			final int TILE_HEIGHT = 512; 
 			final int TILE_SIZE = TILE_WIDTH * TILE_HEIGHT;
@@ -207,23 +200,25 @@ public class PhotoCube {
 			short[] rgb_565 = new short[TILE_SIZE];
 
 			// Convert 8888 to 565, and swap red and green channel position:
-
 			int i = 0; 
 			for (int y = 0; y < TILE_HEIGHT; y++) { 
 				bitmap[face].getPixels(pixels, 0, TILE_WIDTH, 0, y, TILE_WIDTH, 1); 
 				for (int x = 0; x < TILE_WIDTH; x++) { 
 					int argb = pixels[x];
-					int r = 0x1f & (argb >> 19); // Take 5 bits from 23..19 
-					int g = 0x3f & (argb >> 10); // Take 6 bits from 15..10 
-					int b = 0x1f & (argb >> 3); // Take 5 bits from 7.. 3 
+					// Take 5 bits from 23..19. 
+					int r = 0x1f & (argb >> 19); 
+					// Take 6 bits from 15..10.
+					int g = 0x3f & (argb >> 10); 
+					// Take 5 bits from 7.. 3. 
+					int b = 0x1f & (argb >> 3);
 					int rgb = (r << 11) | (g << 5) | b; 
 					rgb_565[i] = (short) rgb;
 					++i;
 				}
 			}
 			ShortBuffer textureBuffer = ShortBuffer.wrap (rgb_565, 0, TILE_SIZE); 
-			gl.glTexImage2D(GL10.GL_TEXTURE_2D, 0, GL10.GL_RGB, bitmap[face].getWidth(), bitmap[face].getHeight(), 0, GL10.GL_RGB, GL10.GL_UNSIGNED_SHORT_5_6_5, textureBuffer); 
-			//GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap[face], 0);
+			gl.glTexImage2D(GL10.GL_TEXTURE_2D, 0, GL10.GL_RGB, bitmap[face].getWidth(),
+					bitmap[face].getHeight(), 0, GL10.GL_RGB, GL10.GL_UNSIGNED_SHORT_5_6_5, textureBuffer);
 			bitmap[face].recycle();
 		}
 	}

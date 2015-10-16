@@ -1,3 +1,14 @@
+/**
+ * Copyright (c) 2014-2015 Digi International Inc.,
+ * All rights not expressly granted are reserved.
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * Digi International Inc. 11001 Bren Road East, Minnetonka, MN 55343
+ * =======================================================================
+ */
 package com.digi.android.rotatingcube.opengl.common;
 
 public final class Quaternion {
@@ -5,70 +16,31 @@ public final class Quaternion {
 	private double y;
 	private double z;
 	private double w;
-	//private float[] matrixs;
-
-	public Quaternion(final Quaternion q) {
-		this(q.x, q.y, q.z, q.w);
-	}
-
-	public Quaternion(double x, double y, double z, double w) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.w = w;
-	}
 
 	public void set(final Quaternion q) {
-		//matrixs = null;
 		this.x = q.x;
 		this.y = q.y;
 		this.z = q.z;
 		this.w = q.w;
 	}
 
-	public Quaternion(Vector3 axis, double angle) {
-		set(axis, angle);
-	}
-
-	public double norm() {
-		return Math.sqrt(dot(this));
-	}
-
-	public double getW() {
-		return w;
-	}
-
-	public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
-	}
-
-	public double getZ() {
-		return z;
+	public Quaternion(Vector3 axis) {
+		set(axis, (double) 0);
 	}
 
 	/**
-	 * @param axis
-	 * rotation axis, unit vector
-	 * @param angle
-	 * the rotation angle
-	 * @return this
+	 * @param axis rotation axis, unit vector.
+	 * @param angle the rotation angle.
 	 */
-	public Quaternion set(Vector3 axis, double angle) {
-		//matrixs = null;
-		double s = (double) Math.sin(angle / 2);
-		w = (double) Math.cos(angle / 2);
+	public void set(Vector3 axis, double angle) {
+		double s = Math.sin(angle / 2);
+		w = Math.cos(angle / 2);
 		x = axis.getX() * s;
 		y = axis.getY() * s;
 		z = axis.getZ() * s;
-		return this;
-	}
+    }
 
-	public Quaternion mulThis(Quaternion q) {
-		//matrixs = null;
+	public void mulThis(Quaternion q) {
 		double nw = w * q.w - x * q.x - y * q.y - z * q.z;
 		double nx = w * q.x + x * q.w + y * q.z - z * q.y;
 		double ny = w * q.y + y * q.w + z * q.x - x * q.z;
@@ -76,86 +48,7 @@ public final class Quaternion {
 		w = nw;
 		x = nx;
 		y = ny;
-		return this;
-	}
-
-	public Quaternion scaleThis(double scale) {
-		if (scale != 1) {
-			//matrixs = null;
-			w *= scale;
-			x *= scale;
-			y *= scale;
-			z *= scale;
-		}
-		return this;
-	}
-
-	public Quaternion divThis(double scale) {
-		if (scale != 1) {
-			//matrixs = null;
-			w /= scale;
-			x /= scale;
-			y /= scale;
-			z /= scale;
-		}
-		return this;
-	}
-
-	public double dot(Quaternion q) {
-		return x * q.x + y * q.y + z * q.z + w * q.w;
-	}
-
-	public boolean equals(Quaternion q) {
-		return x == q.x && y == q.y && z == q.z && w == q.w;
-	}
-
-	public Quaternion interpolateThis(Quaternion q, double t) {
-		if (!equals(q)) {
-			double d = dot(q);
-			double qx, qy, qz, qw;
-
-			if (d < 0f) {
-				qx = -q.x;
-				qy = -q.y;
-				qz = -q.z;
-				qw = -q.w;
-				d = -d;
-			} else {
-				qx = q.x;
-				qy = q.y;
-				qz = q.z;
-				qw = q.w;
-			}
-
-			double f0, f1;
-
-			if ((1 - d) > 0.1f) {
-				double angle = (double) Math.acos(d);
-				double s = (double) Math.sin(angle);
-				double tAngle = t * angle;
-				f0 = (double) Math.sin(angle - tAngle) / s;
-				f1 = (double) Math.sin(tAngle) / s;
-			} else {
-				f0 = 1 - t;
-				f1 = t;
-			}
-
-			x = f0 * x + f1 * qx;
-			y = f0 * y + f1 * qy;
-			z = f0 * z + f1 * qz;
-			w = f0 * w + f1 * qw;
-		}
-
-		return this;
-	}
-
-	public Quaternion normalizeThis() {
-		return divThis(norm());
-	}
-
-	public Quaternion interpolate(Quaternion q, double t) {
-		return new Quaternion(this).interpolateThis(q, t);
-	}
+    }
 
 	/**
 	 * Converts this Quaternion into a matrix, returning it as a float array.
@@ -170,7 +63,7 @@ public final class Quaternion {
 	 * Converts this Quaternion into a matrix, placing the values into the given array.
 	 * @param matrixs 16-length float array.
 	 */
-	public final void toMatrix(float[] matrixs) {
+    private void toMatrix(float[] matrixs) {
 		matrixs[3] = 0.0f;
 		matrixs[7] = 0.0f;
 		matrixs[11] = 0.0f;
