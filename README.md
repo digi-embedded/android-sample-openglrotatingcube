@@ -4,7 +4,8 @@ OpenGL Rotating Cube Sample Application
 This example demonstrates the usage of the OpenGL implementation in Android to
 render a basic rotating cube with textures.
 
-These are the application features:</p>
+These are the application features:
+
  * OpenGL shape rendering with textures.
  * Rendering over a transparent background.
  * Multi axis rotation using touch screen.
@@ -42,11 +43,13 @@ While it is running, you can control cube rotation in the following ways:
 
 Compatible with
 ---------------
+
 * ConnectCore 6 SBC
 * ConnectCore 6 SBC v2
 
 License
----------
+-------
+
 This software is open-source software. Copyright Digi International, 2014-2015.
 
 This Source Code Form is subject to the terms of the Mozilla Public License,
