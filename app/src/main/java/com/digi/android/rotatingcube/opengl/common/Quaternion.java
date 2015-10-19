@@ -9,6 +9,7 @@
  * Digi International Inc. 11001 Bren Road East, Minnetonka, MN 55343
  * =======================================================================
  */
+
 package com.digi.android.rotatingcube.opengl.common;
 
 public final class Quaternion {

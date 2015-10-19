@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/principal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient"
     android:dither="true"
     android:orientation="horizontal">
 
@@ -15,26 +13,4 @@
         android:layout_gravity="center_vertical"
         android:orientation="horizontal" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-
-        <ImageView
-            android:id="@+id/logo_digi"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="start"
-            android:padding="7dp"
-            android:src="@drawable/logodigi_trans"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
-            android:id="@+id/logo_android"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:padding="7dp"
-            android:src="@drawable/android_trans"
-            tools:ignore="ContentDescription" />
-    </LinearLayout>
 </FrameLayout>

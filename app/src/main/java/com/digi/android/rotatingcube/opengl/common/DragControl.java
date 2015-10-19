@@ -9,6 +9,7 @@
  * Digi International Inc. 11001 Bren Road East, Minnetonka, MN 55343
  * =======================================================================
  */
+
 package com.digi.android.rotatingcube.opengl.common;
 
 import com.digi.android.rotatingcube.R;
@@ -29,12 +30,6 @@ public final class DragControl implements OnTouchListener {
 
 	private static final int DRAG_START = 0;
 	private static final int DRAG_END = 1;
-	
-	// Touch regions.
-	private static final int ZOOM_IN = 0;
-	private static final int ZOOM_OUT = 1;
-	private static final int SPIN_IN = 2;
-	private static final int SPIN_OUT = 3;
 	
 	// Touch modes.
 	private static final int NONE = 0;
@@ -98,32 +93,33 @@ public final class DragControl implements OnTouchListener {
 		this.minScale = minScale;
 		this.standardScale = standardScale;
 		this.scale = this.standardScale;
-		this.gestureDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener() {
+
+		this.gestureDetector = new GestureDetector(context, new GestureDetector.OnGestureListener() {
+			@Override
+			public boolean onDown(MotionEvent motionEvent) {
+				// Do nothing here.
+				return false;
+			}
 
 			@Override
-			public boolean onFling(MotionEvent e1, MotionEvent e2,
-					float velocityX, float velocityY) {
-				flingAxis.set(-velocityY, -velocityX);
-				flingSpeed = flingAxis.magnitude()/FLING_REDUCTION;
-				flingAxis.normalise();
-				return true;
-			}
-			
-			@Override
-			public boolean onDoubleTap(MotionEvent e) {
-				resetScale();
-				return true;
-			}
-			
-			@Override
-			public boolean onSingleTapConfirmed(MotionEvent e) {
+			public void onShowPress(MotionEvent motionEvent) {
 				// Do nothing here.
-				return true;
 			}
-			
+
+			@Override
+			public boolean onSingleTapUp(MotionEvent motionEvent) {
+				// Do nothing here.
+				return false;
+			}
+
+			@Override
+			public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+				// Do nothing here.
+				return false;
+			}
+
 			@Override
 			public void onLongPress(MotionEvent e) {
-				super.onLongPress(e);
 				mode = ZOOM_LONG;
 				LayoutInflater inflater = ((Activity)context).getLayoutInflater();
 				View toastRoot = inflater.inflate(R.layout.zoom_toast, null);
@@ -135,6 +131,34 @@ public final class DragControl implements OnTouchListener {
 				toast.show();
 				longZoom.set(e.getX(), e.getY());
 			}
+
+			@Override
+			public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float velocityX, float velocityY) {
+				flingAxis.set(-velocityY, -velocityX);
+				flingSpeed = flingAxis.magnitude()/FLING_REDUCTION;
+				flingAxis.normalise();
+				return true;
+			}
+		});
+
+		this.gestureDetector.setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
+			@Override
+			public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
+				// Do nothing here.
+				return false;
+			}
+
+			@Override
+			public boolean onDoubleTap(MotionEvent motionEvent) {
+				resetScale();
+				return true;
+			}
+
+			@Override
+			public boolean onDoubleTapEvent(MotionEvent motionEvent) {
+				// Do nothing here.
+				return false;
+			}
 		});
 	}
 
@@ -144,84 +168,61 @@ public final class DragControl implements OnTouchListener {
 		int action = event.getAction();
 		// Important use mask to distinguish pointer events (multi-touch).
 		switch (action & MotionEvent.ACTION_MASK) {
-		case MotionEvent.ACTION_DOWN:
-			switch (getTouchArea()){
-			case ZOOM_IN:
-				if (scale < maxScale)
-					scale += 0.5f;
-				break;
-			case ZOOM_OUT:
-				if (scale > minScale)
-					scale -= 0.5f;
-				break;
-			case SPIN_IN:
-				if((flingDamping >= 0) && (flingDamping < 0.9))
-					setFD(getFD() + 0.015);
-				else if((flingDamping>=0.9)&&(flingDamping<1))
-					setFD(getFD() + 0.02);
-				break;
-			case SPIN_OUT:
-				if ((flingDamping > 0) && (flingDamping < 0.9))
-					setFD(getFD() - 0.015);
-				else if((flingDamping >= 0.9) && (flingDamping <= 1))
-					setFD(getFD() - 0.02);
-				break;
-			default:
+			case MotionEvent.ACTION_DOWN:
 				dragX[DRAG_START] = dragX[DRAG_END] = event.getX();
 				dragY[DRAG_START] = dragY[DRAG_END] = event.getY();
 				flingSpeed = 0;
-				mode = DRAG; 
-			}
-			return true;
-		case MotionEvent.ACTION_POINTER_DOWN:
-			oldDist = spacing(event);
-			if (oldDist > 20f)
-				mode = ZOOM;
-			return true;
-		case MotionEvent.ACTION_MOVE:
-			if (mode == DRAG){
-				dragX[DRAG_END] = event.getX();
-				dragY[DRAG_END] = event.getY();
-			} else if (mode == ZOOM){
-				float newDist = spacing(event);
-				if (newDist > 20f){
-					float tempScale = scale * (oldDist / newDist);
-					if (tempScale < maxScale && tempScale > minScale)
-						scale = tempScale;
-					oldDist = newDist;
-				}
-			}
-			else if (mode == ZOOM_LONG){
-				float newDist = spacingZoom(event);
-				if (newDist > 3f) {
-					if (isZoomIn(event)) {
-						if (scale < maxScale)
-							scale += 0.1;
-					} else {
-						if (scale > minScale)
-						scale -= 0.1;
+				mode = DRAG;
+				return true;
+			case MotionEvent.ACTION_POINTER_DOWN:
+				oldDist = spacing(event);
+				if (oldDist > 20f)
+					mode = ZOOM;
+				return true;
+			case MotionEvent.ACTION_MOVE:
+				if (mode == DRAG){
+					dragX[DRAG_END] = event.getX();
+					dragY[DRAG_END] = event.getY();
+				} else if (mode == ZOOM){
+					float newDist = spacing(event);
+					if (newDist > 20f){
+						float tempScale = scale * (oldDist / newDist);
+						if (tempScale < maxScale && tempScale > minScale)
+							scale = tempScale;
+						oldDist = newDist;
 					}
 				}
-				longZoom.set(event.getX(), event.getY());
-			}
-			return true;
-		case MotionEvent.ACTION_UP:
-			float rotateX = dragX[DRAG_END] - dragX[DRAG_START];
-			float rotateY = dragY[DRAG_END] - dragY[DRAG_START];
-			if (rotateX != 0 || rotateY != 0) {
-				spinAxis = new Vector3(-rotateY, -rotateX);
-				double mag = spinAxis.magnitude();
-				spinAxis.normalise();
-				intermediateRotation.set(spinAxis, mag/DRAG_SLOWING);
-				rotation.mulThis(intermediateRotation);
-			}
-			dragX[DRAG_END] = dragX[DRAG_START] = 0;
-			dragY[DRAG_END] = dragY[DRAG_START] = 0;
-			mode = NONE;
-			return true;
-		case MotionEvent.ACTION_POINTER_UP:
-			mode = NONE;
-			return true;
+				else if (mode == ZOOM_LONG){
+					float newDist = spacingZoom(event);
+					if (newDist > 3f) {
+						if (isZoomIn(event)) {
+							if (scale < maxScale)
+								scale += 0.1;
+						} else {
+							if (scale > minScale)
+							scale -= 0.1;
+						}
+					}
+					longZoom.set(event.getX(), event.getY());
+				}
+				return true;
+			case MotionEvent.ACTION_UP:
+				float rotateX = dragX[DRAG_END] - dragX[DRAG_START];
+				float rotateY = dragY[DRAG_END] - dragY[DRAG_START];
+				if (rotateX != 0 || rotateY != 0) {
+					spinAxis = new Vector3(-rotateY, -rotateX);
+					double mag = spinAxis.magnitude();
+					spinAxis.normalise();
+					intermediateRotation.set(spinAxis, mag/DRAG_SLOWING);
+					rotation.mulThis(intermediateRotation);
+				}
+				dragX[DRAG_END] = dragX[DRAG_START] = 0;
+				dragY[DRAG_END] = dragY[DRAG_START] = 0;
+				mode = NONE;
+				return true;
+			case MotionEvent.ACTION_POINTER_UP:
+				mode = NONE;
+				return true;
 		}
 		return false;
 	}
@@ -261,15 +262,6 @@ public final class DragControl implements OnTouchListener {
 	 */
 	public float getCurrentScale(){
 		return scale;
-	}
-	
-	/**
-	 * Retrieves current fling damping value.
-	 * 
-	 * @return Current fling damping value.
-	 */
-	private double getFD(){
-		return this.flingDamping;
 	}
 	
 	/**
@@ -317,15 +309,6 @@ public final class DragControl implements OnTouchListener {
 	 */
 	private boolean isZoomIn(MotionEvent event){
 		return event.getY() < longZoom.y;
-	}
-	
-	/**
-	 * Retrieves the special region of the screen where touch event occurred.
-	 *
-	 * @return Screen region.
-	 */
-	private int getTouchArea(){
-		return -1;
 	}
 	
 	/**

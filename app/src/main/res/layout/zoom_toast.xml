@@ -1,42 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:background="@drawable/border_shape"
-	android:orientation="vertical">
-<ImageView android:layout_width="25dip"
-	android:layout_height="25dip"
-	android:layout_gravity="center"
-	android:src="@drawable/up"
-	android:layout_marginTop="7dip"
-	tools:ignore="ContentDescription" />
-<ImageView android:layout_width="25dip"
-	android:layout_height="25dip"
-	android:layout_gravity="center"
-	android:src="@drawable/zoom_in"
-	tools:ignore="ContentDescription" />
-<TextView android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:text="@string/zoom_in"
-	android:layout_gravity="center"
-	android:textSize="7sp"
-	android:layout_marginBottom="7dip"/>
-<ImageView android:layout_width="25dip"
-	android:layout_height="25dip"
-	android:layout_gravity="center"
-	android:src="@drawable/zoom_out"
-	android:layout_marginTop="7dip"
-	tools:ignore="ContentDescription" />
-<TextView android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:text="@string/zoom_out"
-	android:textSize="7sp"
-	android:layout_gravity="center" />
-<ImageView android:layout_width="25dip"
-	android:layout_height="25dip"
-	android:layout_gravity="center"
-	android:src="@drawable/down"
-	android:layout_marginTop="7dip"
-	tools:ignore="ContentDescription" />
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_shape"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="7dp"
+        android:src="@drawable/up"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:src="@drawable/zoom_in"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="7dp"
+        android:text="@string/zoom_in"
+        android:textSize="7sp" />
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="7dp"
+        android:src="@drawable/zoom_out"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/zoom_out"
+        android:textSize="7sp" />
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="7dp"
+        android:src="@drawable/down"
+        tools:ignore="ContentDescription" />
 </LinearLayout>
