@@ -14,7 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.rotatingcube.opengl.cube;
+package com.digi.android.sample.rotatingcube.opengl.cube;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -23,7 +23,7 @@ import java.nio.ShortBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import com.digi.android.rotatingcube.R;
+import com.digi.android.sample.rotatingcube.R;
 
 import android.content.Context;
 import android.graphics.Bitmap;

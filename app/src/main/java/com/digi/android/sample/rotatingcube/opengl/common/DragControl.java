@@ -14,9 +14,9 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.rotatingcube.opengl.common;
+package com.digi.android.sample.rotatingcube.opengl.common;
 
-import com.digi.android.rotatingcube.R;
+import com.digi.android.sample.rotatingcube.R;
 
 import android.app.Activity;
 import android.content.Context;

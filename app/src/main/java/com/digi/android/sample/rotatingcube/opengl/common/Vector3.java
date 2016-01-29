@@ -14,7 +14,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.rotatingcube.opengl.common;
+package com.digi.android.sample.rotatingcube.opengl.common;
 
 final class Vector3 {
 	private double x,y,z;

@@ -14,10 +14,10 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-package com.digi.android.rotatingcube;
+package com.digi.android.sample.rotatingcube;
 
-import com.digi.android.rotatingcube.opengl.common.DragControl;
-import com.digi.android.rotatingcube.opengl.cube.CubeGLSurfaceView;
+import com.digi.android.sample.rotatingcube.opengl.common.DragControl;
+import com.digi.android.sample.rotatingcube.opengl.cube.CubeGLSurfaceView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
