@@ -43,8 +43,8 @@ class PhotoCube {
 			R.drawable.logodigi,
 			R.drawable.android,
 			R.drawable.android,
-			R.drawable.freescale_logo,
-			R.drawable.freescale_logo
+			R.drawable.nxp_logo,
+			R.drawable.nxp_logo
 	};
 
 	private FloatBuffer mTextureBuffer;
