@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2014-2018, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -21,7 +21,6 @@ import com.digi.android.sample.rotatingcube.R;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.PointF;
-import android.util.FloatMath;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -290,7 +289,7 @@ public final class DragControl implements OnTouchListener {
 	private float spacing(MotionEvent event){
 		float x = event.getX(0) - event.getX(1);
 		float y = event.getY(0) - event.getY(1);
-		return FloatMath.sqrt(x * x + y * y);
+		return (float)Math.sqrt(x * x + y * y);
 	}
 	
 	/**
@@ -302,7 +301,7 @@ public final class DragControl implements OnTouchListener {
 	private float spacingZoom(MotionEvent event){
 		float x = event.getX() - longZoom.x;
 		float y = event.getY() - longZoom.y;
-		return FloatMath.sqrt(x * x + y * y);
+		return (float)Math.sqrt(x * x + y * y);
 	}
 	
 	/**
