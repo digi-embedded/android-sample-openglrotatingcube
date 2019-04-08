@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2019, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -56,7 +56,7 @@ class PhotoCube {
 	private final Context context;
 
 	// Constructor - Set up the vertex buffer.
-	public PhotoCube(Context context) {
+	PhotoCube(Context context) {
 
 		this.context = context;
 
@@ -111,7 +111,7 @@ class PhotoCube {
 	}
 
 	// Render the shape.
-	public void draw(GL10 gl) {
+	void draw(GL10 gl) {
 		if (mShouldLoadTexture) {
 			loadTexture(gl);
 			mShouldLoadTexture = false;
@@ -178,7 +178,7 @@ class PhotoCube {
 	}
 	
 	// Load images into 6 GL textures.
-	public void loadTexture(GL10 gl) {
+	void loadTexture(GL10 gl) {
 	// Generate texture-ID array for 6 IDs.
 		gl.glGenTextures(6, textureIDs, 0);
 

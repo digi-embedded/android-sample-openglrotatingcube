@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2019, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -41,7 +41,7 @@ class CubeGLRenderer implements GLSurfaceView.Renderer{
 	 * 
 	 * @param context Application context.
 	 */
-	public CubeGLRenderer(Context context) {
+	CubeGLRenderer(Context context) {
 		photocube = new PhotoCube(context);
 	}
 
@@ -50,7 +50,7 @@ class CubeGLRenderer implements GLSurfaceView.Renderer{
 	 * 
 	 * @param dragControl New drag control.
 	 */
-	public void setDragControl(DragControl dragControl){
+	void setDragControl(DragControl dragControl){
 		this.dragControl = dragControl;
 	}
 	

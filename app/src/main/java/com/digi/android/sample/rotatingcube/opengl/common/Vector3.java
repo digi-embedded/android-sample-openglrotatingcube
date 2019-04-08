@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2019, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -19,35 +19,35 @@ package com.digi.android.sample.rotatingcube.opengl.common;
 final class Vector3 {
 	private double x,y,z;
 
-	public double getX() {
+	double getX() {
 		return x;
 	}
 
-	public double getY() {
+	double getY() {
 		return y;
 	}
 
-	public double getZ() {
+	double getZ() {
 		return z;
 	}
 
-	public Vector3(double ix, double iy) {
+	Vector3(double ix, double iy) {
 		x = ix;
 		y = iy;
 		z = (double) 0;
 	}
 
-	public void set(double ix, double iy) {
+	void set(double ix, double iy) {
 		x = ix;
 		y = iy;
 		z = (double) 0;
 	}
 
-	public double magnitude() {
+	double magnitude() {
 		return Math.sqrt(x*x+y*y+z*z);
 	}
 
-	public void normalise() {
+	void normalise() {
 		double mag = magnitude();
 		x /= mag;
 		y /= mag;

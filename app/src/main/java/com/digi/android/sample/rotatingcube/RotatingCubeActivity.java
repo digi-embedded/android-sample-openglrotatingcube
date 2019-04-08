@@ -80,7 +80,7 @@ public class RotatingCubeActivity extends Activity {
 
 		this.setContentView(R.layout.cube);
 
-		LinearLayout ly = (LinearLayout)this.findViewById(R.id.layout);
+		LinearLayout ly = this.findViewById(R.id.layout);
 		CubeGLSurfaceView glView = new CubeGLSurfaceView(this);
 		ly.addView(glView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		this.dragControl = new DragControl(this);

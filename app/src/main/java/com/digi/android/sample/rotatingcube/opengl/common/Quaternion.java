@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2019, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -22,14 +22,14 @@ public final class Quaternion {
 	private double z;
 	private double w;
 
-	public void set(final Quaternion q) {
+	void set(final Quaternion q) {
 		this.x = q.x;
 		this.y = q.y;
 		this.z = q.z;
 		this.w = q.w;
 	}
 
-	public Quaternion(Vector3 axis) {
+	Quaternion(Vector3 axis) {
 		set(axis, (double) 0);
 	}
 
@@ -37,7 +37,7 @@ public final class Quaternion {
 	 * @param axis rotation axis, unit vector.
 	 * @param angle the rotation angle.
 	 */
-	public void set(Vector3 axis, double angle) {
+	void set(Vector3 axis, double angle) {
 		double s = Math.sin(angle / 2);
 		w = Math.cos(angle / 2);
 		x = axis.getX() * s;
@@ -45,7 +45,7 @@ public final class Quaternion {
 		z = axis.getZ() * s;
     }
 
-	public void mulThis(Quaternion q) {
+	void mulThis(Quaternion q) {
 		double nw = w * q.w - x * q.x - y * q.y - z * q.z;
 		double nx = w * q.x + x * q.w + y * q.z - z * q.y;
 		double ny = w * q.y + y * q.w + z * q.x - x * q.z;
