@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -66,11 +66,9 @@ public class RotatingCubeActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case MENU_ID_FRICTION:
-				this.handleDifficultiesPressed();
-				break;
-		}
+		if (item.getItemId() == MENU_ID_FRICTION)
+			this.handleDifficultiesPressed();
+
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -115,11 +113,14 @@ public class RotatingCubeActivity extends Activity {
 	 */
 	private float retrieveFDFromSelection(int selection){
 		switch(selection) {
-		case FRICTION_NONE: return 1;
-		case FRICTION_LOW: return 0.98f;
-		case FRICTION_MEDIUM: return 0.9f;
-		case FRICTION_HARD: return 0;
-		default: return 1;
+			case FRICTION_LOW:
+				return 0.98f;
+			case FRICTION_MEDIUM:
+				return 0.9f;
+			case FRICTION_HARD:
+				return 0;
+			default: /* FRICTION_NONE and rest*/
+				return 1;
 		}
 	}
 }

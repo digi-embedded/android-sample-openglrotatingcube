@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -30,7 +30,7 @@ public final class Quaternion {
 	}
 
 	Quaternion(Vector3 axis) {
-		set(axis, (double) 0);
+		set(axis, 0);
 	}
 
 	/**
@@ -43,7 +43,7 @@ public final class Quaternion {
 		x = axis.getX() * s;
 		y = axis.getY() * s;
 		z = axis.getZ() * s;
-    }
+	}
 
 	void mulThis(Quaternion q) {
 		double nw = w * q.w - x * q.x - y * q.y - z * q.z;
@@ -53,7 +53,7 @@ public final class Quaternion {
 		w = nw;
 		x = nx;
 		y = ny;
-    }
+	}
 
 	/**
 	 * Converts this Quaternion into a matrix, returning it as a float array.

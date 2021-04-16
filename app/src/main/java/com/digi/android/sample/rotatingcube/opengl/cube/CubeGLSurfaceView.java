@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -27,7 +27,7 @@ import android.util.AttributeSet;
  * to override event handlers such as onKeyUp(), onTouchEvent().
  */
 public class CubeGLSurfaceView extends GLSurfaceView {
-	
+
 	// Custom GL Renderer.
 	private final CubeGLRenderer renderer;
 
@@ -45,7 +45,7 @@ public class CubeGLSurfaceView extends GLSurfaceView {
 		this.requestFocus();  
 		this.setFocusableInTouchMode(true);
 	}
-	
+
 	public CubeGLSurfaceView(Context context, AttributeSet attributes){
 		super(context,attributes);
 		renderer = new CubeGLRenderer(context);
@@ -55,7 +55,6 @@ public class CubeGLSurfaceView extends GLSurfaceView {
 		this.requestFocus();
 		this.setFocusableInTouchMode(true);
 	}
-
 
 	/**
 	 * Sets the drag control with the given one.

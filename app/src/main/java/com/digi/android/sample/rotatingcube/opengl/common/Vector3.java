@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -34,17 +34,17 @@ final class Vector3 {
 	Vector3(double ix, double iy) {
 		x = ix;
 		y = iy;
-		z = (double) 0;
+		z = 0;
 	}
 
 	void set(double ix, double iy) {
 		x = ix;
 		y = iy;
-		z = (double) 0;
+		z = 0;
 	}
 
 	double magnitude() {
-		return Math.sqrt(x*x+y*y+z*z);
+		return Math.sqrt(x*x + y*y + z*z);
 	}
 
 	void normalise() {

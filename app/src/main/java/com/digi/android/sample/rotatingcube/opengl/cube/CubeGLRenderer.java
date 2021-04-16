@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -28,7 +28,7 @@ import android.opengl.GLU;
 /**
  *  OpenGL Custom renderer used with GLSurfaceView .
  */
-class CubeGLRenderer implements GLSurfaceView.Renderer{
+class CubeGLRenderer implements GLSurfaceView.Renderer {
 
 	// Touch screen event handler.
 	private DragControl dragControl;
@@ -53,7 +53,7 @@ class CubeGLRenderer implements GLSurfaceView.Renderer{
 	void setDragControl(DragControl dragControl){
 		this.dragControl = dragControl;
 	}
-	
+
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		// Set color's clear-value to black.
@@ -80,7 +80,7 @@ class CubeGLRenderer implements GLSurfaceView.Renderer{
 		// Load cube textures.
 		photocube.loadTexture(gl); 
 	}
-	
+
 	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		/*

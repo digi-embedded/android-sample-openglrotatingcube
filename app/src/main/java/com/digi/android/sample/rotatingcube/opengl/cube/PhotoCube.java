@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -139,12 +139,12 @@ class PhotoCube {
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIDs[1]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NICEST);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 4, 4);
-		
+
 		// Back.
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIDs[2]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NICEST);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 8, 4);
-		
+
 		// Right.
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIDs[3]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NICEST);
@@ -159,7 +159,7 @@ class PhotoCube {
 		gl.glBindTexture(GL10.GL_TEXTURE_2D, textureIDs[5]);
 		gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_NICEST);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 20, 4);
-		
+
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
 	}
@@ -179,7 +179,7 @@ class PhotoCube {
 	
 	// Load images into 6 GL textures.
 	void loadTexture(GL10 gl) {
-	// Generate texture-ID array for 6 IDs.
+		// Generate texture-ID array for 6 IDs.
 		gl.glGenTextures(6, textureIDs, 0);
 
 		for (int face = 0; face < numFaces; face++) {

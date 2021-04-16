@@ -3,6 +3,7 @@
     android:id="@+id/principal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#00FFFFFF"
     android:dither="true"
     android:orientation="horizontal">
 
@@ -11,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
+        android:background="#000000"
         android:orientation="horizontal" />
 
 </FrameLayout>
