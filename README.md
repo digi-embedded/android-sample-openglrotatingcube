@@ -17,8 +17,8 @@ Demo requirements
 
 To run this example you need:
 
-* One compatible device to host the application.
-* A USB connection between the device and the host PC in order to transfer and
+* A compatible development board to host the application.
+* A USB connection between the board and the host PC in order to transfer and
   launch the application.
 
 Demo setup
@@ -26,13 +26,13 @@ Demo setup
 
 Make sure the hardware is set up correctly:
 
-1. The device is powered on.
-2. The device is connected directly to the PC by the micro USB cable.
+1. The development board is powered on.
+2. The board is connected directly to the PC by the micro USB cable.
 
 Demo run
 --------
 
-The example is already configured, so all you need to do is to build and 
+The example is already configured, so all you need to do is to build and
 launch the project.
   
 While it is running, you can control cube rotation in the following ways:
@@ -47,6 +47,7 @@ Compatible with
 * ConnectCore 6 SBC
 * ConnectCore 6 SBC v3
 * ConnectCore 8X SBC Pro
+* ConnectCore 8M Mini Development Kit
 
 License
 -------
