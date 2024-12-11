@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2014-2025, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -21,7 +21,6 @@ import com.digi.android.sample.rotatingcube.opengl.cube.CubeGLSurfaceView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.Menu;
@@ -94,13 +93,10 @@ public class RotatingCubeActivity extends Activity {
 	private void handleDifficultiesPressed(){
 		AlertDialog.Builder ab = new AlertDialog.Builder(this);
 		ab.setTitle("Select friction");
-		ab.setSingleChoiceItems(this.frictions, this.selectedFriction, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int item) {
-				selectedFriction = item;
-				dragControl.setFD(retrieveFDFromSelection(selectedFriction));
-				dialog.dismiss();
-			}
+		ab.setSingleChoiceItems(this.frictions, this.selectedFriction, (dialog, item) -> {
+			selectedFriction = item;
+			dragControl.setFD(retrieveFDFromSelection(selectedFriction));
+			dialog.dismiss();
 		});
 		ab.show();
 	}

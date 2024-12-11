@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2014-2025, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -28,6 +28,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 public final class DragControl implements OnTouchListener {
 
@@ -99,30 +101,30 @@ public final class DragControl implements OnTouchListener {
 
 		this.gestureDetector = new GestureDetector(context, new GestureDetector.OnGestureListener() {
 			@Override
-			public boolean onDown(MotionEvent motionEvent) {
+			public boolean onDown(@NonNull MotionEvent motionEvent) {
 				// Do nothing here.
 				return false;
 			}
 
 			@Override
-			public void onShowPress(MotionEvent motionEvent) {
+			public void onShowPress(@NonNull MotionEvent motionEvent) {
 				// Do nothing here.
 			}
 
 			@Override
-			public boolean onSingleTapUp(MotionEvent motionEvent) {
-				// Do nothing here.
-				return false;
-			}
-
-			@Override
-			public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+			public boolean onSingleTapUp(@NonNull MotionEvent motionEvent) {
 				// Do nothing here.
 				return false;
 			}
 
 			@Override
-			public void onLongPress(MotionEvent e) {
+			public boolean onScroll(MotionEvent motionEvent, @NonNull MotionEvent motionEvent1, float v, float v1) {
+				// Do nothing here.
+				return false;
+			}
+
+			@Override
+			public void onLongPress(@NonNull MotionEvent e) {
 				mode = ZOOM_LONG;
 				LayoutInflater inflater = ((Activity)context).getLayoutInflater();
 				View toastRoot = inflater.inflate(R.layout.zoom_toast, null);
@@ -136,7 +138,7 @@ public final class DragControl implements OnTouchListener {
 			}
 
 			@Override
-			public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float velocityX, float velocityY) {
+			public boolean onFling(MotionEvent motionEvent, @NonNull MotionEvent motionEvent1, float velocityX, float velocityY) {
 				flingAxis.set(-velocityY, -velocityX);
 				flingSpeed = flingAxis.magnitude()/FLING_REDUCTION;
 				flingAxis.normalise();
@@ -146,19 +148,19 @@ public final class DragControl implements OnTouchListener {
 
 		this.gestureDetector.setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
 			@Override
-			public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
+			public boolean onSingleTapConfirmed(@NonNull MotionEvent motionEvent) {
 				// Do nothing here.
 				return false;
 			}
 
 			@Override
-			public boolean onDoubleTap(MotionEvent motionEvent) {
+			public boolean onDoubleTap(@NonNull MotionEvent motionEvent) {
 				resetScale();
 				return true;
 			}
 
 			@Override
-			public boolean onDoubleTapEvent(MotionEvent motionEvent) {
+			public boolean onDoubleTapEvent(@NonNull MotionEvent motionEvent) {
 				// Do nothing here.
 				return false;
 			}
@@ -200,10 +202,10 @@ public final class DragControl implements OnTouchListener {
 					if (newDist > 3f) {
 						if (isZoomIn(event)) {
 							if (scale < maxScale)
-								scale += 0.1;
+								scale += 0.1F;
 						} else {
 							if (scale > minScale)
-							scale -= 0.1;
+								scale -= 0.1F;
 						}
 					}
 					longZoom.set(event.getX(), event.getY());
